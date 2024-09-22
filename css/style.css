@@ -29,8 +29,8 @@
 /* ---------- base ---------- */
 
 body {
-  background-color: var(--white-color);
   color: var(--black-color);
+  background-color: var(--white-color);
   font-size: 14px;
   font-family: Helvetica, "Noto Sans JP", sans-serif;
   font-feature-settings: "palt"
@@ -168,7 +168,7 @@ span {
 
 .l_header-nav_list {
   position: absolute;
-  top: 20%;
+  top: 33%;
   left: 14px;
 }
 
@@ -198,7 +198,7 @@ span {
 }
 
 .l_header-nav_item:not(:first-child) {
-  margin-top: 24px;
+  margin-top: 8px;
 }
 
 @media screen and (min-width: 1080px) {
@@ -233,6 +233,7 @@ span {
   font-family: "Playfair Display", serif;
   font-size: 29px;
   display: block;
+  line-height: 0.8;
 }
 
 @media screen and (min-width: 1080px) {
@@ -245,18 +246,18 @@ span {
 
 .l_header-nav_link span::before {
   content: "";
-  margin: 0 8px;
+  margin: 0 4px 0 0;
   display: inline-block;
-  height: 0.8em;
-  width: 0.8em;
+  height: 0.7em;
+  width: 0.7em;
   background-image: url(../img/Group\ 2.svg);
   background-size: contain;
 }
 
 .l_header-nav_icon {
   display: flex;
-  margin-top: 54px;
-  gap: 16px;
+  margin-top: 57px;
+  gap: 15px;
 }
 
 @media screen and (min-width: 1080px) {
@@ -463,6 +464,7 @@ span {
   text-decoration: underline;
   letter-spacing: -0.02em;
   line-height: 1.1;
+
 }
 
 @media screen and (min-width: 768px) {
