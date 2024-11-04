@@ -39,14 +39,14 @@ document.querySelectorAll(".js_navigation a").forEach(link => {
 // 		x: -100,
 // 	});
 
-/*---------- スライドイン（単体） ----------*/
-gsap.from(".js_problem", {
-  y: 200,
+/*---------- teamスライドイン ----------*/
+gsap.from(".js_slidein", {
+  y: 100,
   autoAlpha: 0,
   duration: 1, //アニメーションの長さ
   ease: "Power4.inOut", //アニメーションの変化率
   scrollTrigger: {
-    trigger: ".js_problem-trigger",
+    trigger: ".js_slidein-trigger",
     start: "top center",
     // 発火するスクロール位置や終了位置をマーカーする
     // markers: true,
@@ -56,16 +56,20 @@ gsap.from(".js_problem", {
     each: 0.6,
     // amount: アニメーションの総時間（eachかamountのどちらかを指定する）
     // amount: 1,
-    from: "start",
+    from: "end",
     //start：1番目から始める
     // center： 中央から始める
     // edges： 両端から始める
     // random： ランダムに始める
     // end： 最後から始める
   },
+  onComplete: function () {
+    // アニメーション完了後、クラスを追加して::afterを表示
+    document.querySelector(".top_team_list:nth-child(1)").classList.add("show-after");
+  },
 });
 
-/*---------- スライドイン（複数） ----------*/
+/*---------- serviceスライドイン ----------*/
 const items = document.querySelectorAll(".js_h-slide");
 
 // forEach文のコールバック関数
@@ -78,16 +82,18 @@ const items = document.querySelectorAll(".js_h-slide");
 // 三項演算子の書き方
 // "条件" ? "条件の内容がtrueになる場合の値" : "条件の内容がfalseになる場合の値";
 
-items.forEach(function (item, idx) {
+items.forEach(function (item) {
   gsap.from(item, {
     // インデックス番号に+1して、2で割った時にあまりが0だったら100%、でなければ-100%に配置する
-    x: (idx + 1) % 2 == 0 ? "100%" : "-100%",
+    // x: (idx + 1) % 2 == 0 ? "100%" : "-100%",
+    y : "50%",
     autoAlpha: 0,
+    duration: 2, //アニメーションの長さ
     ease: "Power4.inOut",
     scrollTrigger: {
       // item.parentNode: itemの親要素
       trigger: item.parentNode,
-      start: "top center",
+      start: "top 70%",
       // 発火するスクロール位置や終了位置をマーカーする
       // markers: true,
     },
@@ -206,3 +212,104 @@ const slideshow = new Swiper(".js_slideshow", {
     disableOnInteraction: false,
   },
 });
+
+/*---------- ヘッダー表示 ----------*/
+
+(function() {
+  const fh = document.querySelector(".js_fixed-header");
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 100) {
+      fh.classList.add('is-show');
+    } else {
+      fh.classList.remove('is-show');
+    }
+  });
+}());
+
+/*---------- border表示 ----------*/
+
+document.addEventListener("DOMContentLoaded", function () {
+  const borders = document.querySelectorAll(".js_border"); // すべての.js_border要素を取得
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("is-active"); // ビューポートに入ったらクラスを追加
+        observer.unobserve(entry.target); // 一度だけ実行するために監視を解除
+      }
+    });
+  });
+
+  borders.forEach((js_border) => observer.observe(js_border)); // 各.js_border要素を監視
+});
+
+
+/*---------- リストホバー ----------*/
+
+document.addEventListener("DOMContentLoaded", function () {
+  const listItems = document.querySelectorAll(".top_team_list");
+
+  listItems.forEach((item, index) => {
+    if (index !== 0) { // 1番目以外の項目に対して
+      item.addEventListener("mouseenter", () => {
+
+        // 1番目のリスト項目の::afterを非表示
+        listItems[0].classList.remove("show-after");
+        listItems[0].classList.add("hide-after");
+
+        // ホバー中のリスト項目の::afterを表示
+        item.classList.add("show-after");
+      });
+
+      item.addEventListener("mouseleave", () => {
+        // 1番目のリスト項目の::afterを再表示
+        listItems[0].classList.remove("hide-after");
+        listItems[0].classList.add("show-after");
+
+        // ホバーが外れたリスト項目の::afterを非表示
+        item.classList.remove("show-after");
+      });
+    }
+  });
+});
+
+/*---------- テキストアニメーション ----------*/
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  const textElements = document.querySelectorAll(".js-text");
+
+  textElements.forEach((textElement) => {
+    // テキスト内容を取得
+    let textContent = textElement.innerHTML;
+
+    // 英語の特定の単語の後に改行を挿入
+    textContent = textContent.replace("unique.", "unique.<br class=u_lg-up />");
+    textContent = textContent.replace("world!", "world!<br>");
+    
+    // 日本語の特定の単語の後に改行を挿入（例：「ユニークであること」）
+    textContent = textContent.replace("ユニークであること", "ユニークであること<br>");
+    textContent = textContent.replace("視覚化します。", "視覚化します。<br>");
+
+    // 文を分割して <span> タグで囲む
+    const sentences = textContent.split(/(?<=[.!?。！？])\s*/);
+    textElement.innerHTML = sentences
+      .map(sentence => `<span>${sentence.trim()}</span>`)
+      .join(" ");
+
+    // GSAPアニメーションを適用
+    gsap.to(textElement.querySelectorAll("span"), {
+      y: 0,
+      opacity: 1,
+      duration: 1.5,
+      ease: "Power4.out",
+      stagger: 0.3,
+      scrollTrigger: {
+        trigger: textElement,
+        start: "center center",
+      },
+    });
+  });
+});
+
