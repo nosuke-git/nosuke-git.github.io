@@ -47,7 +47,7 @@ gsap.from(".js_slidein", {
   ease: "Power4.inOut", //アニメーションの変化率
   scrollTrigger: {
     trigger: ".js_slidein-trigger",
-    start: "top center",
+    start: "top 80%",
     // 発火するスクロール位置や終了位置をマーカーする
     // markers: true,
   },
@@ -93,7 +93,7 @@ items.forEach(function (item) {
     scrollTrigger: {
       // item.parentNode: itemの親要素
       trigger: item.parentNode,
-      start: "top 70%",
+      start: "top 80%",
       // 発火するスクロール位置や終了位置をマーカーする
       // markers: true,
     },
@@ -307,7 +307,7 @@ document.addEventListener("DOMContentLoaded", function () {
       stagger: 0.3,
       scrollTrigger: {
         trigger: textElement,
-        start: "center 70%",
+        start: "center 80%",
       },
     });
   });
