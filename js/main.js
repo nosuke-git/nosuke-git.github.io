@@ -43,7 +43,7 @@ document.querySelectorAll(".js_navigation a").forEach(link => {
 gsap.from(".js_slidein", {
   y: 100,
   autoAlpha: 0,
-  duration: 0.5, //アニメーションの長さ
+  duration: 0.7, //アニメーションの長さ
   ease: "Power4.inOut", //アニメーションの変化率
   scrollTrigger: {
     trigger: ".js_slidein-trigger",
