@@ -56,7 +56,7 @@ gsap.from(".js_slidein", {
     each: 0.6,
     // amount: アニメーションの総時間（eachかamountのどちらかを指定する）
     // amount: 1,
-    from: "end",
+    from: "start",
     //start：1番目から始める
     // center： 中央から始める
     // edges： 両端から始める
