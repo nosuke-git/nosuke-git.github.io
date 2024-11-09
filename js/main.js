@@ -53,7 +53,7 @@ gsap.from(".js_slidein", {
   },
   stagger: {
     // each: 指定した時間が経過した時に次の要素のアニメーションを開始する
-    each: 0.6,
+    each: 0.3,
     // amount: アニメーションの総時間（eachかamountのどちらかを指定する）
     // amount: 1,
     from: "start",
