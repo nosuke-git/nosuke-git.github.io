@@ -307,7 +307,7 @@ document.addEventListener("DOMContentLoaded", function () {
       stagger: 0.3,
       scrollTrigger: {
         trigger: textElement,
-        start: "center 80%",
+        start: "top 80%",
       },
     });
   });
