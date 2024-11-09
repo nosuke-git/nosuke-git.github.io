@@ -302,12 +302,12 @@ document.addEventListener("DOMContentLoaded", function () {
     gsap.to(textElement.querySelectorAll("span"), {
       y: 0,
       opacity: 1,
-      duration: 1.5,
+      duration: 0.8,
       ease: "Power4.out",
       stagger: 0.3,
       scrollTrigger: {
         trigger: textElement,
-        start: "center center",
+        start: "center 30%",
       },
     });
   });
