@@ -286,11 +286,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // 英語の特定の単語の後に改行を挿入
     textContent = textContent.replace("unique.", "unique.<br class=u_lg-up />");
-    textContent = textContent.replace("world!", "world!<br>");
+    textContent = textContent.replace("world!", "world!<br />");
     
     // 日本語の特定の単語の後に改行を挿入（例：「ユニークであること」）
-    textContent = textContent.replace("ユニークであること", "ユニークであること<br>");
-    textContent = textContent.replace("視覚化します。", "視覚化します。<br>");
+    textContent = textContent.replace("ユニークであること", "ユニークであること<br class=u_lg-up />");
+    textContent = textContent.replace("視覚化します。", "視覚化します。<br />");
 
     // 文を分割して <span> タグで囲む
     const sentences = textContent.split(/(?<=[.!?。！？])\s*/);
@@ -302,7 +302,7 @@ document.addEventListener("DOMContentLoaded", function () {
     gsap.to(textElement.querySelectorAll("span"), {
       y: 0,
       opacity: 1,
-      duration: 0.4,
+      duration: 1,
       ease: "Power4.out",
       stagger: 0.3,
       scrollTrigger: {
