@@ -43,7 +43,7 @@ document.querySelectorAll(".js_navigation a").forEach(link => {
 gsap.from(".js_slidein", {
   y: 100,
   autoAlpha: 0,
-  duration: 1, //アニメーションの長さ
+  duration: 0.5, //アニメーションの長さ
   ease: "Power4.inOut", //アニメーションの変化率
   scrollTrigger: {
     trigger: ".js_slidein-trigger",
@@ -53,7 +53,7 @@ gsap.from(".js_slidein", {
   },
   stagger: {
     // each: 指定した時間が経過した時に次の要素のアニメーションを開始する
-    each: 0.3,
+    each: 0.1,
     // amount: アニメーションの総時間（eachかamountのどちらかを指定する）
     // amount: 1,
     from: "start",
@@ -302,7 +302,7 @@ document.addEventListener("DOMContentLoaded", function () {
     gsap.to(textElement.querySelectorAll("span"), {
       y: 0,
       opacity: 1,
-      duration: 0.8,
+      duration: 0.4,
       ease: "Power4.out",
       stagger: 0.3,
       scrollTrigger: {
