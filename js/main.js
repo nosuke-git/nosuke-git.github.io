@@ -26,18 +26,6 @@ document.querySelectorAll(".js_navigation a").forEach(link => {
   });
 });
 
-/*---------- スライドイン ----------*/
-// gsap.timeline()
-// 	.from('.js_copy', {
-// 		duration: 0.6,
-// 		autoAlpha: 0,
-// 		x: -100,
-// 	})
-// 	.from('.js_sub-copy', {
-// 		duration: 0.6,
-// 		autoAlpha: 0,
-// 		x: -100,
-// 	});
 
 /*---------- teamスライドイン ----------*/
 gsap.from(".js_slidein", {
@@ -65,7 +53,7 @@ gsap.from(".js_slidein", {
   },
   onComplete: function () {
     // アニメーション完了後、クラスを追加して::afterを表示
-    document.querySelector(".top_team_list:nth-child(1)").classList.add("show-after");
+    document.querySelector(".top_team_member_img:nth-child(1)").classList.add("show-after");
   },
 });
 
@@ -88,12 +76,12 @@ items.forEach(function (item) {
     // x: (idx + 1) % 2 == 0 ? "100%" : "-100%",
     y : "50%",
     autoAlpha: 0,
-    duration: 2, //アニメーションの長さ
+    duration: 0.7, //アニメーションの長さ
     ease: "Power4.inOut",
     scrollTrigger: {
       // item.parentNode: itemの親要素
       trigger: item.parentNode,
-      start: "top 80%",
+      start: "top 70%",
       // 発火するスクロール位置や終了位置をマーカーする
       // markers: true,
     },
@@ -248,33 +236,34 @@ document.addEventListener("DOMContentLoaded", function () {
 
 document.addEventListener("DOMContentLoaded", function () {
   const listItems = document.querySelectorAll(".top_team_list");
+  const memberItems = document.querySelectorAll(".top_team_member_img");
+
 
   listItems.forEach((item, index) => {
     if (index !== 0) { // 1番目以外の項目に対して
       item.addEventListener("mouseenter", () => {
 
         // 1番目のリスト項目の::afterを非表示
-        listItems[0].classList.remove("show-after");
-        listItems[0].classList.add("hide-after");
+        memberItems[0].classList.remove("show-after");
+        memberItems[0].classList.add("hide-after");
 
         // ホバー中のリスト項目の::afterを表示
-        item.classList.add("show-after");
+        memberItems[index].classList.add("show-after");
       });
 
       item.addEventListener("mouseleave", () => {
         // 1番目のリスト項目の::afterを再表示
-        listItems[0].classList.remove("hide-after");
-        listItems[0].classList.add("show-after");
+        memberItems[0].classList.remove("hide-after");
+        memberItems[0].classList.add("show-after");
 
         // ホバーが外れたリスト項目の::afterを非表示
-        item.classList.remove("show-after");
+        memberItems[index].classList.remove("show-after");
       });
     }
   });
 });
 
 /*---------- テキストアニメーション ----------*/
-
 
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -284,27 +273,23 @@ document.addEventListener("DOMContentLoaded", function () {
     // テキスト内容を取得
     let textContent = textElement.innerHTML;
 
-    // 英語の特定の単語の後に改行を挿入
-    textContent = textContent.replace("unique.", "unique.<br class=u_lg-up />");
-    textContent = textContent.replace("world!", "world!<br />");
-    
-    // 日本語の特定の単語の後に改行を挿入（例：「ユニークであること」）
-    textContent = textContent.replace("ユニークであること", "ユニークであること<br class=u_lg-up />");
-    textContent = textContent.replace("視覚化します。", "視覚化します。<br />");
+    // 文を分割して <span> タグで囲む（空白を保持）
+    const sentences = textContent.match(/[^.!?。！？/]*[.!?。！？/]+[\s]*|[^.!?。！？/]+/g);
 
-    // 文を分割して <span> タグで囲む
-    const sentences = textContent.split(/(?<=[.!?。！？])\s*/);
     textElement.innerHTML = sentences
-      .map(sentence => `<span>${sentence.trim()}</span>`)
-      .join(" ");
+      .map(sentence => `<span>${sentence}</span>`)  // それぞれの文を <span> で囲む
+      .join(""); // 改行なしで連結
 
     // GSAPアニメーションを適用
-    gsap.to(textElement.querySelectorAll("span"), {
+    gsap.fromTo(textElement.querySelectorAll("span"), {
+      y: 10,  // 初期位置（少し下に設定）
+      opacity: 0,  // 初期透明度
+    }, {
       y: 0,
       opacity: 1,
       duration: 1,
       ease: "Power4.out",
-      stagger: 0.3,
+      stagger: 0.1,  // 各文（span）のアニメーションに遅延を入れる
       scrollTrigger: {
         trigger: textElement,
         start: "top 80%",
@@ -313,3 +298,144 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+
+
+
+/*---------- テキストアニメーション ----------*/
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  const textElements = document.querySelectorAll(".js-letter");
+
+  textElements.forEach((textElement) => {
+    let textContent = textElement.innerHTML;
+
+    // 文字を一つずつ分割
+    const letters = textContent.split('');
+    
+    // 各文字を <span> で囲んで再構築
+    textElement.innerHTML = letters
+      .map(letter => `<span>${letter}</span>`)
+      .join('');
+
+    // GSAPアニメーションを適用
+    gsap.fromTo(textElement.querySelectorAll("span"), {
+      opacity: 0,     // 初期透明度
+      y: 20,          // 初期位置（少し下に設定）
+    }, {
+      opacity: 1,     // アニメーション後の透明度
+      y: 0,           // アニメーション後の位置
+      duration: 2,    // アニメーション時間
+      ease: "Power4.out",  // イージング
+      stagger: 0.05,  // 文字ごとに0.03秒ずつずらしてアニメーション
+      scrollTrigger: {
+        trigger: textElement,
+        start: "top 80%",  // スクロールが開始する位置
+        // end: "top 80%",
+        // scrub: true,        // スクロール位置に合わせてアニメーション
+      },
+    });
+  });
+});
+
+
+/*---------- テキストアニメーション 英語 ----------*/
+
+document.addEventListener("DOMContentLoaded", function () {
+  const textElements = document.querySelectorAll(".js-text-en");
+
+  textElements.forEach((textElement) => {
+
+    let textContent = textElement.innerHTML;
+
+    // 半角スペースで分割
+    const sentences = textContent.split(' ');
+
+    textElement.innerHTML = sentences
+      .map(sentence => `<span>${sentence.trim()}</span>`)
+      .join(" ");  // 各単語を <span>で囲んで再構築
+
+    // GSAPアニメーションを適用
+    gsap.fromTo(textElement.querySelectorAll("span"),{
+      y: 10, // 初期位置を少し下に設定（初期値）
+      opacity: 0, // 初期の透明度
+    }, {
+      y: 0,
+      opacity: 1,
+      duration: 1,
+      ease: "Power4.out",
+      stagger: 0.1,
+      scrollTrigger: {
+        trigger: textElement,
+        start: "top 80%",
+      },
+    });
+  });
+})
+
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  // SVG内のすべてのpath要素を取得
+  const paths = document.querySelectorAll(".svg-animation svg path");
+  
+  // GSAPでアニメーションを適用
+  gsap.fromTo(paths, 
+    {
+      opacity: 0,  // 初期状態で文字は透明
+      y: 20,      // 文字を左から少しずらしておく
+    }, 
+    {
+      opacity: 1,  // アニメーション後に文字は完全に表示
+      y: 0,        // 文字は元の位置に戻る
+      duration: 2,  // 各文字のアニメーション時間
+      stagger: {
+        // each: 指定した時間が経過した時に次の要素のアニメーションを開始する
+        each: 0.05,
+        // amount: アニメーションの総時間（eachかamountのどちらかを指定する）
+        // amount: 1,
+        from: "start",
+        //start：1番目から始める
+        // center： 中央から始める
+        // edges： 両端から始める
+        // random： ランダムに始める
+        // end： 最後から始める
+
+      },
+            ease: "power4.out", // イージング
+    }
+  );
+});
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  // SVG内のすべてのpath要素を取得
+  const paths = document.querySelectorAll(".top_about_title svg path");
+  
+  // GSAPでアニメーションを適用
+  gsap.fromTo(paths, 
+    {
+      opacity: 0,  // 初期状態で文字は透明
+      y: 20,      // 文字を左から少しずらしておく
+    }, 
+    {
+      opacity: 1,  // アニメーション後に文字は完全に表示
+      y: 0,        // 文字は元の位置に戻る
+      duration: 2,  // 各文字のアニメーション時間
+      stagger: {
+        // each: 指定した時間が経過した時に次の要素のアニメーションを開始する
+        each: 0.05,
+        // amount: アニメーションの総時間（eachかamountのどちらかを指定する）
+        // amount: 1,
+        from: "end",
+        //start：1番目から始める
+        // center： 中央から始める
+        // edges： 両端から始める
+        // random： ランダムに始める
+        // end： 最後から始める
+
+      },
+            ease: "power4.out", // イージング
+    }
+  );
+});
